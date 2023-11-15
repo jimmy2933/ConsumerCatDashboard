@@ -3,29 +3,52 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import UserScreen from './Screens/UserScreen';
 import AdminScreen from './Screens/AdminScreen';
 import Login from './Screens/Login';
-import { auth } from './firebase'; // Adjust the path as per your project structure
+import { auth, db } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
+  const [userType, setUserType] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      setCurrentUser(user);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setUserType(userDoc.data().userType);
+          setCurrentUser(user);
+          setIsLoading(false);
+        } else {
+          // Handle where user document doesn't exist
+        }
+      } else {
+        setCurrentUser(null);
+        setUserType('');
+        setIsLoading(false);
+      }
     });
 
     return () => unsubscribe();
   }, []);
 
+  if (isLoading) {
+    return <div></div>;
+  }
+
+  const renderBasedOnUserType = () => {
+    if (!currentUser) return <Login />;
+    return userType === 'admin' ? <AdminScreen /> : <UserScreen />;
+  };
+
   return (
     <Router>
-      <div style={{ border: '15px solid rgba(0, 0, 0, 0)' }} className="app">
-        {!currentUser}
+      <div className="app">
         <Routes>
-          <Route path="/" element={currentUser ? <Navigate to="/UserScreen" /> : <Login />} />
-          <Route path="/UserScreen" element={currentUser ? <UserScreen /> : <Navigate to="/" />} />
-          <Route path="/AdminScreen" element={currentUser ? <AdminScreen /> : <Navigate to="/" />} />
-          {/* Add other routes here as needed */}
+          <Route path="/" element={renderBasedOnUserType()} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
     </Router>

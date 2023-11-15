@@ -1,0 +1,63 @@
+.user-dashboard {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .product-upload-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-sizing: border-box; /* For width consistency */
+  }
+  
+  .submit-btn, .sign-out-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .submit-btn:hover, .sign-out-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .success-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+  
+  .submit-btn:active {
+    background-color: #0056b3; /* Darkens the button when clicked */
+  }
+  

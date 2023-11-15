@@ -3,26 +3,27 @@ import { auth, db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import './Login.css'; // Assuming you have a separate CSS file for styling
+import './Login.css';
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Fetch user type from Firestore
       const userDocRef = doc(db, 'users', user.uid);
       const userDoc = await getDoc(userDocRef);
+      const userType = userDoc.data().userType;
 
       if (userDoc.exists()) {
         const userType = userDoc.data().userType;
-        // Redirect based on user type
         if (userType === 'admin') {
           navigate('/AdminScreen');
         } else {
@@ -30,13 +31,18 @@ function Login() {
         }
       } else {
         console.log('User document does not exist!');
-        // Handle case where user document is not found
+        navigate('/');
       }
     } catch (error) {
       console.error('Error logging in: ', error);
-      // Handle login errors (e.g., user not found, wrong password, etc.)
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="login-container">

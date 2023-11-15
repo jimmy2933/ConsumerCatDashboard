@@ -1,67 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, db } from '../firebase';
-import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import './UserScreen.css';
 
-function Login() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);  // State to handle loading
+function UserScreen() {
+  const [brand, setBrand] = useState('');
+  const [itemSize, setItemSize] = useState('');
+  const [productName, setProductName] = useState('');
+  const [upc, setUpc] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);  // Set loading to true
+  const handleSignOut = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // Fetch user type from Firestore
-      const userDocRef = doc(db, 'users', user.uid);
-      const userDoc = await getDoc(userDocRef);
-
-      if (userDoc.exists()) {
-        const userType = userDoc.data().userType;
-        // Redirect based on user type
-        if (userType === 'admin') {
-          navigate('/AdminScreen');
-        } else {
-          navigate('/UserScreen');
-        }
-      } else {
-        console.log('User document does not exist!');
-        navigate('/');  // Handle as needed, perhaps stay on login page or show an error
-      }
+      await signOut(auth);
+      console.log('User signed out successfully');
     } catch (error) {
-      console.error('Error logging in: ', error);
-      // Handle login errors here
-    } finally {
-      setIsLoading(false);  // Set loading to false regardless of outcome
+      console.error('Error signing out: ', error);
     }
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;  // Or any other loading indicator
-  }
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (auth.currentUser) {
+        const userDocRef = doc(db, 'users', auth.currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setFirstName(userDoc.data().firstName);
+        } else {
+          console.log('No such document!');
+        }
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const productRef = doc(db, 'productDatabase', upc); // Using UPC as the document ID
+      const productData = {
+        Brand: brand,
+        ItemSize: itemSize,
+        ProductName: productName,
+        UPC: upc,
+        expiresInDays: 7,
+        fullName: brand + " " + productName
+      };
+
+      await setDoc(productRef, productData);
+      console.log('Product uploaded successfully');
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+    } catch (error) {
+      console.error('Error uploading product: ', error);
+    }
+  };
 
   return (
-    <form onSubmit={handleLogin}>
-      <input 
-        type="email" 
-        value={email} 
-        onChange={(e) => setEmail(e.target.value)} 
-        placeholder="Email"
-      />
-      <input 
-        type="password" 
-        value={password} 
-        onChange={(e) => setPassword(e.target.value)} 
-        placeholder="Password"
-      />
-      <button type="submit">Login</button>
-    </form>
+    <div className="user-dashboard">
+      <h1>User Dashboard</h1>
+      <p>Welcome, {firstName}!</p>
+      {showSuccess && <div className="success-message">Product Uploaded Successfully!</div>}
+      <form onSubmit={handleSubmit} className="product-upload-form">
+        <div className="form-group">
+          <label>Brand:</label>
+          <input type="text" value={brand} onChange={(e) => setBrand(e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>Item Size:</label>
+          <input type="text" value={itemSize} onChange={(e) => setItemSize(e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>Product Name:</label>
+          <input type="text" value={productName} onChange={(e) => setProductName(e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>UPC:</label>
+          <input type="text" value={upc} onChange={(e) => setUpc(e.target.value)} />
+        </div>
+        <button type="submit" className="submit-btn">Upload Product</button>
+      </form>
+      <button onClick={handleSignOut} className="sign-out-btn">Sign Out</button>
+    </div>
   );
 }
 
-export default Login;
+export default UserScreen;
