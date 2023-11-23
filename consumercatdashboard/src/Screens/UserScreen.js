@@ -65,7 +65,7 @@ function UserScreen() {
       <div className="sidebar">
         <ul>
           <li>
-            <Link to="/ab-testing">A/B Testing</Link> {/* This link leads to the A/B Testing screen */}
+            <Link to="/ab-testing">UI Feedback</Link> {/* This link leads to the A/B Testing screen */}
           </li>
           <li>
             <a href="#">Link 2</a>

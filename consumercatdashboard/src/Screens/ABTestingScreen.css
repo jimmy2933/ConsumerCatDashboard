@@ -38,6 +38,20 @@
     transition: background-color 0.3s, color 0.3s; /* Smooth transition for color change */
   }
   
+  .ab-test-option {
+    /* non-selected styles */
+    transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
+  }
+  
+  .selected {
+    /* Selected styles */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Glowing effect */
+  }
+ 
+  .select-option-btn:active {
+    /* Styles for when the button is clicked */
+    background-color: #0056b3; /* Darker blue to indicate active press */
+  }
   
   .tab.active {
     background-color: #007bff;

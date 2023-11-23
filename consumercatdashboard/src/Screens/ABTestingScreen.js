@@ -1,25 +1,56 @@
-// ABTestingScreen.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, db } from '../firebase';
+import { doc, collection, setDoc } from 'firebase/firestore';
 import './ABTestingScreen.css';
 
 function ABTestingScreen() {
-    const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('Report');
-    const [selectedOption, setSelectedOption] = useState('');
-    const [feedback, setFeedback] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const [user] = useAuthState(auth);
+  const [selectedOption, setSelectedOption] = useState('');
 
-  const handleFeedbackSubmit = (e) => {
-    e.preventDefault();
-    console.log(feedback); // Replace with actual logic to handle feedback
-    console.log(selectedOption);
-    setFeedback(''); // Clear feedback after submission
-  };
+  const [activeTab, setActiveTab] = useState('Report');
+  const [selections, setSelections] = useState({ Report: '', Inventory: '', Scanner: '' });
+  const [feedback, setFeedback] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    console.log(option);
+    setSelections(prevSelections => ({
+      ...prevSelections,
+      [activeTab]: option,
+    }));
+  };
+
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    if (user) {
+      try {
+        const feedbackDocRef = doc(collection(db, 'userFeedback', activeTab, 'feedback'));
+        await setDoc(feedbackDocRef, {
+          Option: selections[activeTab],
+          Feedback: feedback,
+          UID: user.uid, // Use the UID from the user object
+          timestamp: new Date()
+        });
+
+        console.log('Feedback submitted successfully');
+        setFeedback('');
+        setSelections(prevSelections => ({
+          ...prevSelections,
+          [activeTab]: '',
+        }));
+      } catch (error) {
+        console.error('Error submitting feedback: ', error);
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else {
+      console.log('User is not logged in');
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -41,16 +72,16 @@ function ABTestingScreen() {
   
       {activeTab === 'Report' && (
         <div className="tab-content active-content">
-          <h2>Report A/B Testing</h2>
+          <h2>Report Screen Feedback</h2>
           <div className="ab-test-container">
-            <div className={`ab-test-option ${selectedOption === 'A' ? 'selected' : ''}`}>
+            <div className={`ab-test-option ${selections['Report'] === 'A' ? 'selected' : ''}`}>
               <h3>UI Option A</h3>
               <div className="ui-placeholder">UI A Placeholder</div>
               <button className="select-option-btn" onClick={() => handleOptionSelect('A')}>
                 Select Option A
               </button>
             </div>
-            <div className={`ab-test-option ${selectedOption === 'B' ? 'selected' : ''}`}>
+            <div className={`ab-test-option ${selections['Report'] === 'B' ? 'selected' : ''}`}>
               <h3>UI Option B</h3>
               <div className="ui-placeholder">UI B Placeholder</div>
               <button className="select-option-btn" onClick={() => handleOptionSelect('B')}>
@@ -68,81 +99,82 @@ function ABTestingScreen() {
             ></textarea>
             <button type="submit" className="submit-feedback-btn" disabled={isSubmitting}>
               {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
-            </button>
+              </button>
           </form>
         </div>
       )}
   
-      {/* Placeholder for Inventory and Scanner tabs content */}
+      {/* Repeat for other tabs */}
       {activeTab === 'Inventory' && (
         <div className="tab-content active-content">
-          <h2>Inventory A/B Testing</h2>
-          <div className="ab-test-container">
-            <div className={`ab-test-option ${selectedOption === 'A' ? 'selected' : ''}`}>
-              <h3>UI Option A</h3>
-              <div className="ui-placeholder">UI A Placeholder</div>
-              <button className="select-option-btn" onClick={() => handleOptionSelect('A')}>
-                Select Option A
-              </button>
-            </div>
-            <div className={`ab-test-option ${selectedOption === 'B' ? 'selected' : ''}`}>
-              <h3>UI Option B</h3>
-              <div className="ui-placeholder">UI B Placeholder</div>
-              <button className="select-option-btn" onClick={() => handleOptionSelect('B')}>
-                Select Option B
-              </button>
-            </div>
-          </div>
-          <form onSubmit={handleFeedbackSubmit} className="feedback-form">
-            <textarea
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              placeholder="What do you think about the new UI?"
-              className="feedback-input"
-              disabled={isSubmitting}
-            ></textarea>
-            <button type="submit" className="submit-feedback-btn" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
+        <h2>Inventory Screen Feedback</h2>
+        <div className="ab-test-container">
+          <div className={`ab-test-option ${selections['Inventory'] === 'A' ? 'selected' : ''}`}>
+            <h3>UI Option A</h3>
+            <div className="ui-placeholder">UI A Placeholder</div>
+            <button className="select-option-btn" onClick={() => handleOptionSelect('A')}>
+              Select Option A
             </button>
-          </form>
+          </div>
+          <div className={`ab-test-option ${selections['Inventory'] === 'B' ? 'selected' : ''}`}>
+            <h3>UI Option B</h3>
+            <div className="ui-placeholder">UI B Placeholder</div>
+            <button className="select-option-btn" onClick={() => handleOptionSelect('B')}>
+              Select Option B
+            </button>
+          </div>
+        </div>
+        <form onSubmit={handleFeedbackSubmit} className="feedback-form">
+          <textarea
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            placeholder="What do you think about the new UI?"
+            className="feedback-input"
+            disabled={isSubmitting}
+          ></textarea>
+          <button type="submit" className="submit-feedback-btn" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
+            </button>
+        </form>
         </div>
       )}
   
       {activeTab === 'Scanner' && (
         <div className="tab-content active-content">
-          <h2>Scanner A/B Testing</h2>
-          <div className="ab-test-container">
-            <div className={`ab-test-option ${selectedOption === 'A' ? 'selected' : ''}`}>
-              <h3>UI Option A</h3>
-              <div className="ui-placeholder">UI A Placeholder</div>
-              <button className="select-option-btn" onClick={() => handleOptionSelect('A')}>
-                Select Option A
-              </button>
-            </div>
-            <div className={`ab-test-option ${selectedOption === 'B' ? 'selected' : ''}`}>
-              <h3>UI Option B</h3>
-              <div className="ui-placeholder">UI B Placeholder</div>
-              <button className="select-option-btn" onClick={() => handleOptionSelect('B')}>
-                Select Option B
-              </button>
-            </div>
-          </div>
-          <form onSubmit={handleFeedbackSubmit} className="feedback-form">
-            <textarea
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              placeholder="What do you think about the new UI?"
-              className="feedback-input"
-              disabled={isSubmitting}
-            ></textarea>
-            <button type="submit" className="submit-feedback-btn" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
+        <h2>Scanner Screen Feedback</h2>
+        <div className="ab-test-container">
+          <div className={`ab-test-option ${selections['Scanner'] === 'A' ? 'selected' : ''}`}>
+            <h3>UI Option A</h3>
+            <div className="ui-placeholder">UI A Placeholder</div>
+            <button className="select-option-btn" onClick={() => handleOptionSelect('A')}>
+              Select Option A
             </button>
-          </form>
+          </div>
+          <div className={`ab-test-option ${selections['Scanner'] === 'B' ? 'selected' : ''}`}>
+            <h3>UI Option B</h3>
+            <div className="ui-placeholder">UI B Placeholder</div>
+            <button className="select-option-btn" onClick={() => handleOptionSelect('B')}>
+              Select Option B
+            </button>
+          </div>
+        </div>
+        <form onSubmit={handleFeedbackSubmit} className="feedback-form">
+          <textarea
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            placeholder="What do you think about the new UI?"
+            className="feedback-input"
+            disabled={isSubmitting}
+          ></textarea>
+          <button type="submit" className="submit-feedback-btn" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
+            </button>
+        </form>
         </div>
       )}
     </div>
   );
+  
   
 }
 
