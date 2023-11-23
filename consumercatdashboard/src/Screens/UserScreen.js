@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../firebase';
 import { signOut } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import './UserScreen.css';
 
@@ -61,29 +62,44 @@ function UserScreen() {
 
   return (
     <div className="user-dashboard">
-      <h1>User Dashboard</h1>
-      <p>Welcome, {firstName}!</p>
-      {showSuccess && <div className="success-message">Product Uploaded Successfully!</div>}
-      <form onSubmit={handleSubmit} className="product-upload-form">
-        <div className="form-group">
-          <label>Brand:</label>
-          <input type="text" value={brand} onChange={(e) => setBrand(e.target.value)} />
-        </div>
-        <div className="form-group">
-          <label>Item Size:</label>
-          <input type="text" value={itemSize} onChange={(e) => setItemSize(e.target.value)} />
-        </div>
-        <div className="form-group">
-          <label>Product Name:</label>
-          <input type="text" value={productName} onChange={(e) => setProductName(e.target.value)} />
-        </div>
-        <div className="form-group">
-          <label>UPC:</label>
-          <input type="text" value={upc} onChange={(e) => setUpc(e.target.value)} />
-        </div>
-        <button type="submit" className="submit-btn">Upload Product</button>
-      </form>
-      <button onClick={handleSignOut} className="sign-out-btn">Sign Out</button>
+      <div className="sidebar">
+        <ul>
+          <li>
+            <Link to="/ab-testing">A/B Testing</Link> {/* This link leads to the A/B Testing screen */}
+          </li>
+          <li>
+            <a href="#">Link 2</a>
+          </li>
+          <li>
+            <a href="#">Link 3</a>
+          </li>
+        </ul>
+      </div>
+      <div className="content">
+        <h1>User Dashboard</h1>
+        <p>Welcome, {firstName}!</p>
+        {showSuccess && <div className="success-message">Product Uploaded Successfully!</div>}
+        <form onSubmit={handleSubmit} className="product-upload-form">
+          <div className="form-group">
+            <label>Brand:</label>
+            <input type="text" value={brand} onChange={(e) => setBrand(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Item Size:</label>
+            <input type="text" value={itemSize} onChange={(e) => setItemSize(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Product Name:</label>
+            <input type="text" value={productName} onChange={(e) => setProductName(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>UPC:</label>
+            <input type="text" value={upc} onChange={(e) => setUpc(e.target.value)} />
+          </div>
+          <button type="submit" className="submit-btn">Upload Product</button>
+        </form>
+        <button onClick={handleSignOut} className="sign-out-btn">Sign Out</button>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,115 @@
+/* ABTestingScreen.css */
+.ab-testing-screen {
+    font-family: 'Arial', sans-serif;
+    max-width: 800px;
+    margin: auto;
+    padding-top: 20px;
+  }
+  
+  .navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .back-btn {
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .tab-navigation {
+    display: flex;
+    gap: 10px; /* this ensures even spacing between tabs */
+  }
+  
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #f7f7f7; /* Default non-active background color */
+    color: #333; /* Default non-active text color */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 5px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for color change */
+  }
+  
+  
+  .tab.active {
+    background-color: #007bff;
+    color: white;
+    border-bottom: none;
+  }
+  
+  .tab-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: none; /* Hide all tab content by default */
+  }
+  
+  .active-content {
+    display: block; /* Only show the content of the active tab */
+  }
+  
+  .ab-test-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .ab-test-option {
+    width: 48%;
+    padding: 20px;
+    background: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .ui-placeholder {
+    height: 200px;
+    background-color: #ececec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .select-option-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .feedback-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .feedback-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .submit-feedback-btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import UserScreen from './Screens/UserScreen';
 import AdminScreen from './Screens/AdminScreen';
+import ABTestingScreen from './Screens/ABTestingScreen';
 import Login from './Screens/Login';
 import { auth, db } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -48,6 +49,7 @@ function App() {
       <div className="app">
         <Routes>
           <Route path="/" element={renderBasedOnUserType()} />
+          <Route path="/ab-testing" element={<ABTestingScreen />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
