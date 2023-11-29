@@ -8,7 +8,6 @@ import './ABTestingScreen.css';
 function ABTestingScreen() {
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
-  const [selectedOption, setSelectedOption] = useState('');
 
   const [activeTab, setActiveTab] = useState('Report');
   const [selections, setSelections] = useState({ Report: '', Inventory: '', Scanner: '' });
@@ -32,7 +31,7 @@ function ABTestingScreen() {
         await setDoc(feedbackDocRef, {
           Option: selections[activeTab],
           Feedback: feedback,
-          UID: user.uid, // Use the UID from the user object
+          UID: user.uid,
           timestamp: new Date()
         });
 
@@ -104,7 +103,6 @@ function ABTestingScreen() {
         </div>
       )}
   
-      {/* Repeat for other tabs */}
       {activeTab === 'Inventory' && (
         <div className="tab-content active-content">
         <h2>Inventory Screen Feedback</h2>
@@ -174,8 +172,6 @@ function ABTestingScreen() {
       )}
     </div>
   );
-  
-  
 }
 
 export default ABTestingScreen;

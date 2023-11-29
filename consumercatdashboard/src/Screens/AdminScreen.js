@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { auth, db } from '../firebase'; // Adjust the import path as necessary
+import { Bar } from 'react-chartjs-2';
+import { auth, db } from '../firebase';
 import { signOut } from 'firebase/auth';
-import { collection, query, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import './AdminScreen.css';
+
 
 function AdminScreen() {
     const [userCount, setUserCount] = useState(0);
     const [productCount, setProductCount] = useState(0);
     const [feedbackCount, setFeedbackCount] = useState(0);
+    const [chartData, setChartData] = useState({
+      labels: [],
+      datasets: [],
+    });
 
     useEffect(() => {
       // Fetch Users Count
@@ -22,7 +28,7 @@ function AdminScreen() {
         setProductCount(querySnapshot.size);
       };
 
-      // Fetch Feedback Responses Count (adjust collection path as per your database)
+      // Fetch Feedback Responses Count
       const fetchFeedbackCount = async () => {
         const querySnapshot = await getDocs(collection(db, "feedbackResponses"));
         setFeedbackCount(querySnapshot.size);
@@ -32,6 +38,29 @@ function AdminScreen() {
       fetchProductCount();
       fetchFeedbackCount();
     }, []);
+
+    useEffect(() => {
+      setChartData({
+        labels: ['Users', 'Products', 'Feedback'],
+        datasets: [
+          {
+            label: 'Count',
+            data: [userCount, productCount, feedbackCount],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+      });
+    }, [userCount, productCount, feedbackCount]);
 
     const handleSignOut = async () => {
       try {
@@ -54,8 +83,6 @@ function AdminScreen() {
             <h1>Admin Dashboard</h1>
             <button onClick={handleSignOut}>Sign Out</button>
           </div>
-
-          {/* Status Cards Section */}
           <div className="admin-section">
             <div className="admin-status-cards">
               <div className="status-card">Users: {userCount}</div>
@@ -63,20 +90,13 @@ function AdminScreen() {
               <div className="status-card">Feedback Responses: {feedbackCount}</div>
             </div>
           </div>
-
-          {/* Graphs and Analytics Section */}
           <div className="admin-section">
             <h2>Graphs and Analytics</h2>
-            {/* Content for graphs and analytics */}
+            <Bar data={chartData} />
           </div>
-
-          {/* More Data Section */}
           <div className="admin-section">
             <h2>More Data</h2>
-            {/* Content for other data */}
           </div>
-
-          {/* Additional sections as needed */}
         </div>
       </div>
     );

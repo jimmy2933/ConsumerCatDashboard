@@ -1,31 +1,31 @@
 .user-dashboard {
   display: flex;
-  padding: 0; /* Remove padding from the main container to handle it in sidebar and content separately */
-  max-width: 100%; /* Allow the dashboard to fill the full width */
-  margin: 0 auto; /* Center the dashboard */
+  padding: 0;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .sidebar {
-  width: 15%; /* Set the width of the sidebar */
-  min-width: 100px; /* Set a minimum width for the sidebar */
-  background-color: #f0f0f0; /* Keep your sidebar background color */
-  padding: 20px; /* Padding inside the sidebar */
-  height: 100vh; /* Optional: to make sidebar height to full viewport */
+  width: 15%;
+  min-width: 100px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  height: 100vh;
 }
 
 .content {
-  flex: 1; /* Make the content take up the remaining space */
+  flex: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center align the content */
-  justify-content: flex-start; /* Align content to the top */
-  max-width: 800px; /* Set a max-width for the content area */
-  margin: auto; /* Center the content area */
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 800px;
+  margin: auto;
 }
 
 .product-upload-form {
-  width: 100%; /* Form should take the width of its container */
+  width: 100%;
   background: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -47,7 +47,7 @@
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ddd;
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  box-sizing: border-box;
 }
 
 .submit-btn, .sign-out-btn {
@@ -57,28 +57,23 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: auto; /* Change to auto for original width or set a specific width */
+  width: auto;
   box-sizing: border-box;
-  margin-top: 10px; /* Add some margin at the top of the buttons */
+  margin-top: 10px;
 }
 
 .submit-btn:hover, .sign-out-btn:hover {
   background-color: #0056b3;
 }
 
-.success-message {
-  /* Keep your success message styles unchanged */
-}
-
-/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
   .sidebar {
-    width: 25%; /* Increase the width of the sidebar on smaller screens if needed */
+    width: 25%;
   }
 
   .content {
-    flex: 1; /* Let content take the available space */
-    max-width: none; /* Remove max-width on smaller screens for flexibility */
+    flex: 1;
+    max-width: none;
   }
 }
 
@@ -98,5 +93,3 @@
 .back-btn:hover {
   background-color: #bbb;
 }
-
-/* The rest of your CSS */

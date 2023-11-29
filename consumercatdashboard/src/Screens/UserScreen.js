@@ -41,7 +41,7 @@ function UserScreen() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const productRef = doc(db, 'productDatabase', upc); // Using UPC as the document ID
+      const productRef = doc(db, 'productDatabase', upc);
       const productData = {
         Brand: brand,
         ItemSize: itemSize,
@@ -65,7 +65,7 @@ function UserScreen() {
       <div className="sidebar">
         <ul>
           <li>
-            <Link to="/ab-testing">UI Feedback</Link> {/* This link leads to the A/B Testing screen */}
+            <Link to="/ab-testing">UI Feedback</Link>
           </li>
           <li>
             <a href="#">Link 2</a>
