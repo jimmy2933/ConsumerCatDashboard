@@ -1,140 +1,156 @@
 /* ABTestingScreen.css */
 .ab-testing-screen {
-    font-family: 'Arial', sans-serif;
-    max-width: 800px;
-    margin: auto;
-    padding-top: 20px;
-  }
+  font-family: 'Arial', sans-serif;
+  max-width: 800px;
+  margin: auto;
+  padding-top: 20px;
+}
 
-  .ab-test-option img {
-    max-width: 100%;  /* Ensures the image is never wider than its container */
-    height: auto;     /* Maintains the aspect ratio of the image */
-    display: block;   /* Prevents inline spacing issues */
-    margin: 0 auto;   /* Centers the image if it's smaller than the container */
-    margin-bottom: 15px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Adds a light shadow */
-    border-radius: 10px; /* Rounds the corners of the image */
-  }
-  
-  
-  .navigation {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .back-btn {
-    padding: 10px 20px;
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .tab-navigation {
-    display: flex;
-    gap: 10px; /* this ensures even spacing between tabs */
-  }
-  
-  .tab {
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #f7f7f7; /* Default non-active background color */
-    color: #333; /* Default non-active text color */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 0 5px;
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition for color change */
-  }
-  
-  .ab-test-option {
-    /* non-selected styles */
-    transition: box-shadow 0.3s; /* Smooth transition for box-shadow */
-  }
-  
-  .selected {
-    /* Selected styles */
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Glowing effect */
-  }
- 
-  .select-option-btn:active {
-    /* Styles for when the button is clicked */
-    background-color: #0056b3; /* Darker blue to indicate active press */
-  }
-  
-  .tab.active {
-    background-color: #007bff;
-    color: white;
-    border-bottom: none;
-  }
-  
-  .tab-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    display: none; /* Hide all tab content by default */
-  }
-  
-  .active-content {
-    display: block; /* Only show the content of the active tab */
-  }
-  
-  .ab-test-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .ab-test-option {
-    width: 48%;
-    padding: 20px;
-    background: #f7f7f7;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .ui-placeholder {
-    height: 200px;
-    background-color: #ececec;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .select-option-btn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .feedback-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .feedback-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    min-height: 100px;
-    resize: vertical;
-  }
-  
-  .submit-feedback-btn {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
+/* Image within AB Testing Options */
+.ab-test-option img {
+  max-width: 100%;  /* Ensures the image is never wider than its container */
+  height: auto;     /* Maintains the aspect ratio of the image */
+  display: block;   /* Prevents inline spacing issues */
+  margin: 0 auto;   /* Centers the image if it's smaller than the container */
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Light shadow for depth */
+  border-radius: 10px; /* Rounds the corners of the image */
+}
+
+/* Navigation and layout */
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Back button styling, made consistent with other screens */
+.back-btn {
+  padding: 10px 20px;
+  background-color: #6c757d; /* Gray to match sidebar */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Tab navigation, space between tabs */
+.tab-navigation {
+  display: flex;
+  gap: 10px;
+}
+
+/* Tab styling, rounded corners for a softer look */
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #f7f7f7;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* AB Testing option container */
+.ab-test-option {
+  transition: box-shadow 0.3s;
+}
+
+/* Selected option shadow for a standout effect */
+.selected {
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+/* Active button press effect */
+.select-option-btn:active {
+  background-color: #0056b3;
+}
+
+/* Active tab styling, consistent with button hover state */
+.tab.active {
+  background-color: #007bff; /* Blue to match the submit and sign-out buttons */
+  color: white;
+  border-bottom: none;
+}
+
+/* Content of the tab, hidden by default */
+.tab-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: none;
+}
+
+/* Display the active tab's content */
+.active-content {
+  display: block;
+}
+
+/* Container for the AB test options */
+.ab-test-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for responsiveness */
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Individual AB test option styling */
+.ab-test-option {
+  width: 48%; /* Two options per row */
+  padding: 20px;
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Include padding in width calculation */
+  margin-bottom: 20px; /* Space between rows when wrapped */
+}
+
+/* Placeholder for UI representation */
+.ui-placeholder {
+  height: 200px;
+  background-color: #ececec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Button styling, consistent with other screens */
+.select-option-btn, .submit-feedback-btn {
+  padding: 10px 20px;
+  background-color: #007bff; /* Blue to match other screens */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.select-option-btn:hover, .submit-feedback-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Feedback form styling */
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Feedback input styling */
+.feedback-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  min-height: 100px;
+  resize: vertical; /* Allow resizing vertically */
+}
+
+/* Submit feedback button, consistent with other buttons */
+.submit-feedback-btn {
+  background-color: #28a745; /* Green to indicate a positive action */
+  margin-top: 10px; /* Space from the preceding element */
+}

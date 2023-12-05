@@ -31,6 +31,50 @@ function AdminScreen() {
     });
 
     useEffect(() => {
+      const fetchFeedbackData = async () => {
+        const feedbackTypes = ['Scanner', 'Report', 'Inventory'];
+        const feedbackCounts = {
+          Scanner: { A: 0, B: 0 },
+          Report: { A: 0, B: 0 },
+          Inventory: { A: 0, B: 0 }
+        };
+    
+        for (const type of feedbackTypes) {
+          const feedbackRef = collection(db, 'userFeedback', type, 'feedback');
+          const feedbackSnap = await getDocs(feedbackRef);
+    
+          feedbackSnap.forEach((doc) => {
+            const feedbackData = doc.data();
+            if (feedbackData.Option === 'A') {
+              feedbackCounts[type].A += 1;
+            } else if (feedbackData.Option === 'B') {
+              feedbackCounts[type].B += 1;
+            }
+          });
+        }
+    
+        setNewGraphData({
+          labels: feedbackTypes,
+          datasets: [
+            {
+              label: 'Option A',
+              data: feedbackTypes.map((type) => feedbackCounts[type].A),
+              backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
+            {
+              label: 'Option B',
+              data: feedbackTypes.map((type) => feedbackCounts[type].B),
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            },
+          ],
+        });
+      };
+    
+      fetchFeedbackData();
+    }, []);
+    
+
+    useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (user) {
           // Fetch user data from Firestore
@@ -160,13 +204,16 @@ function AdminScreen() {
           <h2>Graphs and Analytics</h2>
           <div className="admin-section">
             <div className="chart-container">
+              <h3>App Metrics</h3> {/* Label for the first graph */}
               <Bar data={chartData} />
             </div>
             <div className="chart-container">
+              <h3>XXX Metrics</h3> {/* Label for the second graph */}
               <Bar data={analyticsData} />
             </div>
             <div className="chart-container">
-              <Bar data={newGraphData} /> {/* This will start on a new line */}
+              <h3>A/B Testing Metrics</h3> {/* Label for the third graph */}
+              <Bar data={newGraphData} />
             </div>
           </div>
         </div>

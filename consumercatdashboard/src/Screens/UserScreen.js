@@ -67,12 +67,6 @@ function UserScreen() {
           <li>
             <Link to="/ab-testing">UI Feedback</Link>
           </li>
-          <li>
-            <a href="#">Link 2</a>
-          </li>
-          <li>
-            <a href="#">Link 3</a>
-          </li>
         </ul>
       </div>
       <div className="content">

@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../firebase';
 import { doc, collection, setDoc } from 'firebase/firestore';
-import inventoryBImage from '../abTesting/inventoryB.jpg'; // Adjust the path as necessary
+import inventoryBImage from '../abTesting/inventoryB.jpg';
+import inventoryAImage from '../abTesting/inventoryA.jpg';
+import scannerAImage from '../abTesting/scannerA.jpg';
+import reportAImage from '../abTesting/reportA.jpg';
 import './ABTestingScreen.css';
 
 function ABTestingScreen() {
@@ -76,7 +79,7 @@ function ABTestingScreen() {
           <div className="ab-test-container">
             <div className={`ab-test-option ${selections['Report'] === 'A' ? 'selected' : ''}`}>
               <h3>UI Option A</h3>
-              <div className="ui-placeholder">UI A Placeholder</div>
+              <img src={reportAImage} alt="Report A" />
               <button className="select-option-btn" onClick={() => handleOptionSelect('A')}>
                 Select Option A
               </button>
@@ -110,7 +113,7 @@ function ABTestingScreen() {
         <div className="ab-test-container">
           <div className={`ab-test-option ${selections['Inventory'] === 'A' ? 'selected' : ''}`}>
             <h3>UI Option A</h3>
-            <div className="ui-placeholder">UI A Placeholder</div>
+            <img src={inventoryAImage} alt="Inventory A" />
             <button className="select-option-btn" onClick={() => handleOptionSelect('A')}>
               Select Option A
             </button>
@@ -144,7 +147,7 @@ function ABTestingScreen() {
         <div className="ab-test-container">
           <div className={`ab-test-option ${selections['Scanner'] === 'A' ? 'selected' : ''}`}>
             <h3>UI Option A</h3>
-            <div className="ui-placeholder">UI A Placeholder</div>
+            <img src={scannerAImage} alt="Scanner B" />
             <button className="select-option-btn" onClick={() => handleOptionSelect('A')}>
               Select Option A
             </button>

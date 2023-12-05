@@ -1,95 +1,115 @@
 .user-dashboard {
   display: flex;
+  height: 100vh; /* Full viewport height */
   padding: 0;
-  max-width: 100%;
-  margin: 0 auto;
+  margin: 0;
 }
 
 .sidebar {
-  width: 15%;
-  min-width: 100px;
-  background-color: #f0f0f0;
+  width: 200px; /* Match the width of the admin sidebar */
+  background-color: #333; /* Match the admin sidebar color */
+  color: white; /* Text color for sidebar */
   padding: 20px;
-  height: 100vh;
+}
+/* Sidebar link styling */
+.sidebar ul {
+  list-style: none; /* Removes bullet points */
+  padding: 0; /* Resets padding */
+  margin: 0; /* Resets margin */
 }
 
+.sidebar li {
+  margin-bottom: 10px; /* Space between sidebar items */
+}
+
+.sidebar li a {
+  color: #4a90e2; /* Blue color for links, matching the admin link color */
+  text-decoration: none; /* Removes underline */
+  font-weight: bold; /* Bold text for links */
+  display: block; /* Block display to allow padding and margin */
+  padding: 10px; /* Padding for clickable area */
+}
+
+.sidebar li a:hover {
+  color: #2a6eb0; /* Darker blue on hover */
+  background-color: #f0f0f0; /* Light background on hover for visibility */
+  text-decoration: underline; /* Underline on hover */
+}
+
+
 .content {
-  flex: 1;
+  flex-grow: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* Align items to the start, like the admin page */
   justify-content: flex-start;
-  max-width: 800px;
-  margin: auto;
 }
 
 .product-upload-form {
   width: 100%;
   background: #fff;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px; /* Match border radius from admin */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Match box-shadow from admin */
   margin-bottom: 20px;
 }
 
 .form-group {
   margin-bottom: 15px;
+  width: 100%; /* Ensure full width form groups */
 }
 
 .form-group label {
   display: block;
   margin-bottom: 5px;
+  color: #333; /* Text color for consistency */
 }
 
 .form-group input {
   width: 100%;
-  padding: 8px;
-  border-radius: 4px;
+  padding: 10px; /* Match padding from admin */
+  border-radius: 4px; /* Match border radius from admin */
   border: 1px solid #ddd;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Box-sizing for proper padding and border */
 }
 
 .submit-btn, .sign-out-btn {
-  background-color: #007bff;
+  background-color: #007bff; /* Match button colors from admin */
   color: white;
-  padding: 10px 15px;
+  padding: 10px 20px; /* Match padding from admin */
   border: none;
-  border-radius: 4px;
+  border-radius: 4px; /* Match border radius from admin */
   cursor: pointer;
-  width: auto;
-  box-sizing: border-box;
-  margin-top: 10px;
+  margin-top: 10px; /* Consistent margin for buttons */
 }
 
 .submit-btn:hover, .sign-out-btn:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Match hover effect from admin */
 }
 
+/* Responsive design adjustments */
 @media (max-width: 768px) {
   .sidebar {
-    width: 25%;
+    width: 100px; /* Adjust the sidebar width for mobile */
   }
 
   .content {
     flex: 1;
-    max-width: none;
+    width: calc(100% - 100px); /* Adjust content width based on sidebar */
   }
 }
 
+/* Back button styling */
 .back-btn {
-  display: block;
-  padding: 10px 20px;
-  margin: 10px;
   background-color: #ccc;
   color: #333;
-  text-align: center;
-  border: none;
-  border-radius: 4px;
+  padding: 10px 20px;
+  border-radius: 4px; /* Match border radius from admin */
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .back-btn:hover {
-  background-color: #bbb;
+  background-color: #bbb; /* Slight hover effect for the back button */
 }
