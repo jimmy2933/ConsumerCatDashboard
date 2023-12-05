@@ -1,0 +1,140 @@
+.admin-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .admin-sidebar {
+    width: 200px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+  }
+  
+  .admin-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .admin-container {
+    display: flex;
+    font-family: Arial, sans-serif;
+  }
+  
+  .admin-sidebar {
+    min-width: 200px;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+  }
+  
+  .admin-link {
+    display: block;
+    color: #333;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .admin-link:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .admin-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-list {
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .admin-link {
+    color: #4a90e2; /* Example color: blue */
+    text-decoration: none; /* Removes underline */
+    font-weight: bold; /* Makes text bold */
+    /* Add other styling as needed */
+  }
+
+  .admin-link:hover {
+    color: #2a6eb0; /* Darker blue for hover effect */
+    text-decoration: underline; /* Underline on hover */
+  }
+  .admin-main {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  .admin-section {
+    margin-bottom: 20px; /* Space between sections */
+    padding: 15px;
+    background-color: #f4f4f4; /* Different background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  
+  

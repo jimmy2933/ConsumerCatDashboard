@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from '../firebase';
 import { doc, collection, setDoc } from 'firebase/firestore';
+import inventoryBImage from '../abTesting/inventoryB.jpg'; // Adjust the path as necessary
 import './ABTestingScreen.css';
 
 function ABTestingScreen() {
@@ -116,7 +117,7 @@ function ABTestingScreen() {
           </div>
           <div className={`ab-test-option ${selections['Inventory'] === 'B' ? 'selected' : ''}`}>
             <h3>UI Option B</h3>
-            <div className="ui-placeholder">UI B Placeholder</div>
+            <img src={inventoryBImage} alt="Inventory B" />
             <button className="select-option-btn" onClick={() => handleOptionSelect('B')}>
               Select Option B
             </button>

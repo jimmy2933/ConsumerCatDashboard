@@ -1,53 +1,102 @@
+/* Base Layout */
 .admin-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .admin-sidebar {
-    width: 200px;
-    background-color: #333;
-    color: white;
-    padding: 20px;
-  }
-  
-  .admin-content {
-    flex-grow: 1;
-    padding: 20px;
-  }
-  
-  .admin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .admin-main {
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  .admin-section {
-    margin-bottom: 20px; /* Space between sections */
-    padding: 15px;
-    background-color: #f4f4f4; /* Different background */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+  display: flex;
+  height: 100vh;
+}
 
-  
-  
+.admin-sidebar {
+  width: 200px;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+}
+
+.admin-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Header */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Links */
+.admin-link {
+  color: #4a90e2; /* Blue color for links */
+  text-decoration: none; /* Removes underline */
+  font-weight: bold; /* Bold text for links */
+}
+
+.admin-link:hover {
+  color: #2a6eb0; /* Darker blue on hover */
+  text-decoration: underline; /* Underline on hover */
+}
+
+/* Main Content Styling */
+.admin-main {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff; /* Blue background */
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Sections */
+.admin-section {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Charts */
+.chart-container {
+  flex: 0 0 48%; /* Do not grow or shrink, initial width of 48% */
+  max-width: 48%; /* Maximum width to maintain size */
+  height: 400px; /* Adjust the height as needed */
+  margin-right: 2%; /* Spacing between charts */
+  margin-bottom: -65px; /* Space between rows */
+  padding: 5px; /* Padding around each chart */
+  box-sizing: border-box; /* Include padding and border in width and height */
+}
+
+.chart-container:nth-of-type(2n) {
+  margin-right: 0; /* Remove margin right on the second element */
+}
+
+
+/* Status Cards */
+.admin-status-cards {
+  text-align: left; /* Align text to the left in status cards */
+}
+
+.status-card {
+  text-align: left; /* Align text to the left in each status card */
+  margin-bottom: 10px; /* Space between cards */
+}
+
+/* Headings */
+h2 {
+  margin: 20px 0; /* Adjust top and bottom margin as needed */
+}

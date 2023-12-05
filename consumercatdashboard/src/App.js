@@ -4,6 +4,7 @@ import UserScreen from './Screens/UserScreen';
 import AdminScreen from './Screens/AdminScreen';
 import ABTestingScreen from './Screens/ABTestingScreen';
 import Login from './Screens/Login';
+import UserList from './Screens/UserList'; // Import UserList component
 import { auth, db } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -36,7 +37,7 @@ function App() {
   }, []);
 
   if (isLoading) {
-    return <div></div>;
+    return <div>Loading...</div>; // Added loading message
   }
 
   const renderBasedOnUserType = () => {
@@ -50,6 +51,7 @@ function App() {
         <Routes>
           <Route path="/" element={renderBasedOnUserType()} />
           <Route path="/ab-testing" element={<ABTestingScreen />} />
+          <Route path="/admin/users" element={<UserList />} /> {/* Add this line for UserList route */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
