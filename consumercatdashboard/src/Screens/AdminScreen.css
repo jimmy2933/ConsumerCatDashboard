@@ -76,7 +76,6 @@ button:hover {
   max-width: 48%; /* Maximum width to maintain size */
   height: 400px; /* Adjust the height as needed */
   margin-right: 2%; /* Spacing between charts */
-  margin-bottom: -65px; /* Space between rows */
   padding: 5px; /* Padding around each chart */
   box-sizing: border-box; /* Include padding and border in width and height */
 }
@@ -84,7 +83,6 @@ button:hover {
 .chart-container:nth-of-type(2n) {
   margin-right: 0; /* Remove margin right on the second element */
 }
-
 
 /* Status Cards */
 .admin-status-cards {
@@ -99,4 +97,49 @@ button:hover {
 /* Headings */
 h2 {
   margin: 20px 0; /* Adjust top and bottom margin as needed */
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .admin-sidebar {
+    width: 150px; /* Smaller width for smaller screens */
+    padding: 15px;
+  }
+
+  .chart-container {
+    flex: 0 0 100%; /* Full width on smaller screens */
+    max-width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .admin-section {
+    flex-direction: column; /* Stack sections vertically on smaller screens */
+  }
+}
+
+@media (min-width: 1201px) {
+  .admin-container {
+    font-size: 1.1em; /* Slightly larger text for larger screens */
+  }
+
+  .chart-container {
+    height: 450px; /* Taller charts on larger screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    width: 120px; /* Even smaller width for very small screens */
+    padding: 10px;
+  }
+
+  .admin-header, .admin-section, .admin-status-cards {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  button {
+    width: 100%; /* Full width buttons on small screens */
+  }
 }

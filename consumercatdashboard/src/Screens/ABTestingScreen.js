@@ -5,7 +5,9 @@ import { auth, db } from '../firebase';
 import { doc, collection, setDoc } from 'firebase/firestore';
 import inventoryBImage from '../abTesting/inventoryB.jpg';
 import inventoryAImage from '../abTesting/inventoryA.jpg';
+import scannerBImage from '../abTesting/scannerB.jpg';
 import scannerAImage from '../abTesting/scannerA.jpg';
+import reportBImage from '../abTesting/reportB.jpg';
 import reportAImage from '../abTesting/reportA.jpg';
 import './ABTestingScreen.css';
 
@@ -86,7 +88,7 @@ function ABTestingScreen() {
             </div>
             <div className={`ab-test-option ${selections['Report'] === 'B' ? 'selected' : ''}`}>
               <h3>UI Option B</h3>
-              <div className="ui-placeholder">UI B Placeholder</div>
+              <img src={reportBImage} alt="Report B" />
               <button className="select-option-btn" onClick={() => handleOptionSelect('B')}>
                 Select Option B
               </button>
@@ -147,14 +149,14 @@ function ABTestingScreen() {
         <div className="ab-test-container">
           <div className={`ab-test-option ${selections['Scanner'] === 'A' ? 'selected' : ''}`}>
             <h3>UI Option A</h3>
-            <img src={scannerAImage} alt="Scanner B" />
+            <img src={scannerAImage} alt="Scanner A" />
             <button className="select-option-btn" onClick={() => handleOptionSelect('A')}>
               Select Option A
             </button>
           </div>
           <div className={`ab-test-option ${selections['Scanner'] === 'B' ? 'selected' : ''}`}>
             <h3>UI Option B</h3>
-            <div className="ui-placeholder">UI B Placeholder</div>
+            <img src={scannerBImage} alt="Scanner B" />
             <button className="select-option-btn" onClick={() => handleOptionSelect('B')}>
               Select Option B
             </button>
