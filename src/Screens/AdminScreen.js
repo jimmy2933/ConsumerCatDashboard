@@ -15,6 +15,10 @@ function AdminScreen() {
     const [productCount, setProductCount] = useState(0);
     const [feedbackCount, setFeedbackCount] = useState(0);
     const [currentUser, setCurrentUser] = useState(null);
+    const [loginData, setLoginData] = useState({
+      labels: [],
+      datasets: [],
+    });
     const today = new Date().toLocaleDateString();
 
     const [chartData, setChartData] = useState({
@@ -29,7 +33,157 @@ function AdminScreen() {
       labels: [],
       datasets: [],
     });
+    const [deleteData, setDeleteData] = useState({
+      labels: [],
+      datasets: [],
+    });
+    const [scannedData, setScannedData] = useState({
+      labels: [],
+      datasets: [],
+    });
+    const [scannedItemAddData, setScannedItemAddData] = useState({
+      labels: [],
+      datasets: [],
+    });
 
+    // Scanned Item Add
+    useEffect(() => {
+      const fetchScannedInventoryAddData = async () => {
+        const dateLogsRef = collection(db, 'eventLogs', 'scannedItemAdd', 'date');
+        const dateLogsSnap = await getDocs(dateLogsRef);
+        const inventoryAddCountsByDate = {};
+    
+        for (const dateDoc of dateLogsSnap.docs) {
+          const date = dateDoc.id; // The document ID is the date
+          const inventoryData = dateDoc.data();
+    
+          // Count the number of inventory add events (from scanning) for each date
+          inventoryAddCountsByDate[date] = Object.keys(inventoryData).reduce((sum, key) => {
+            return sum + (inventoryData[key].quantityAdded || 0); // Sum up quantities added for each event
+          }, 0);
+        }
+    
+        const sortedDates = Object.keys(inventoryAddCountsByDate).sort();
+        const inventoryAddCounts = sortedDates.map(date => inventoryAddCountsByDate[date]);
+    
+        setScannedItemAddData({
+          labels: sortedDates,
+          datasets: [
+            {
+              label: 'Scanned Items Added',
+              data: inventoryAddCounts,
+              backgroundColor: 'rgba(255, 206, 86, 0.5)',
+            }
+          ],
+        });
+      };
+    
+      fetchScannedInventoryAddData();
+    }, []);
+    
+    // Item Add Graph
+    useEffect(() => {
+      const fetchInventoryData = async () => {
+        const dateLogsRef = collection(db, 'eventLogs', 'itemAdd', 'date');
+        const dateLogsSnap = await getDocs(dateLogsRef);
+        const inventoryCountsByDate = {};
+    
+        for (const dateDoc of dateLogsSnap.docs) {
+          const date = dateDoc.id; // The document ID is the date
+          const inventoryData = dateDoc.data();
+    
+          // Count the number of inventory add events for each date
+          inventoryCountsByDate[date] = Object.keys(inventoryData).reduce((sum, key) => {
+            return sum + inventoryData[key].quantityAdded; // Sum up quantities added for each event
+          }, 0);
+        }
+    
+        const sortedDates = Object.keys(inventoryCountsByDate).sort();
+        const inventoryCounts = sortedDates.map(date => inventoryCountsByDate[date]);
+    
+        setAnalyticsData({
+          labels: sortedDates,
+          datasets: [
+            {
+              label: 'Items Added',
+              data: inventoryCounts,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            }
+          ],
+        });
+      };
+    
+      fetchInventoryData();
+    }, []);
+    
+    // Login Graph
+    useEffect(() => {
+      const fetchLoginData = async () => {
+        const dateLogsRef = collection(db, 'eventLogs', 'login', 'date');
+        const dateLogsSnap = await getDocs(dateLogsRef);
+        const loginCountsByDate = {};
+    
+        for (const dateDoc of dateLogsSnap.docs) {
+          const date = dateDoc.id; // The document ID is the date
+          const loginData = dateDoc.data();
+    
+          // Count the number of logins for each date
+          loginCountsByDate[date] = Object.keys(loginData).length;
+        }
+    
+        const sortedDates = Object.keys(loginCountsByDate).sort();
+        const loginCounts = sortedDates.map(date => loginCountsByDate[date]);
+    
+        setLoginData({
+          labels: sortedDates,
+          datasets: [
+            {
+              label: 'Logins',
+              data: loginCounts,
+              backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            }
+          ],
+        });
+      };
+    
+      fetchLoginData();
+    }, []);
+
+    // Scanned Item Graph
+    useEffect(() => {
+      const fetchBarcodeScanData = async () => {
+        const dateLogsRef = collection(db, 'eventLogs', 'barcodeScan', 'date');
+        const dateLogsSnap = await getDocs(dateLogsRef);
+        const barcodeScanCountsByDate = {};
+    
+        for (const dateDoc of dateLogsSnap.docs) {
+          const date = dateDoc.id; // The document ID is the date
+          const scanData = dateDoc.data();
+    
+          // Count the number of barcode scan events for each date
+          barcodeScanCountsByDate[date] = Object.keys(scanData).length;
+        }
+    
+        const sortedDates = Object.keys(barcodeScanCountsByDate).sort();
+        const barcodeScanCounts = sortedDates.map(date => barcodeScanCountsByDate[date]);
+    
+        setScannedData({
+          labels: sortedDates,
+          datasets: [
+            {
+              label: 'Barcode Scans',
+              data: barcodeScanCounts,
+              backgroundColor: 'rgba(153, 102, 255, 0.5)',
+            }
+          ],
+        });
+      };
+    
+      fetchBarcodeScanData();
+    }, []);
+    
+    
+    // Feedback Graph
     useEffect(() => {
       const fetchFeedbackData = async () => {
         const feedbackTypes = ['Scanner', 'Report', 'Inventory'];
@@ -71,6 +225,38 @@ function AdminScreen() {
       };
     
       fetchFeedbackData();
+    }, []);
+    
+    useEffect(() => {
+      const fetchItemDeletionData = async () => {
+        const dateLogsRef = collection(db, 'eventLogs', 'itemDelete', 'date');
+        const dateLogsSnap = await getDocs(dateLogsRef);
+        const itemDeletionCountsByDate = {};
+    
+        for (const dateDoc of dateLogsSnap.docs) {
+          const date = dateDoc.id; // The document ID is the date
+          const deletionData = dateDoc.data();
+    
+          // Count the number of item deletion events for each date
+          itemDeletionCountsByDate[date] = Object.keys(deletionData).length;
+        }
+    
+        const sortedDates = Object.keys(itemDeletionCountsByDate).sort();
+        const itemDeletionCounts = sortedDates.map(date => itemDeletionCountsByDate[date]);
+    
+        setDeleteData({
+          labels: sortedDates,
+          datasets: [
+            {
+              label: 'Items Deleted',
+              data: itemDeletionCounts,
+              backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            }
+          ],
+        });
+      };
+    
+      fetchItemDeletionData();
     }, []);
     
 
@@ -123,29 +309,6 @@ function AdminScreen() {
       fetchFeedbackCount();
     }, []);
 
-    // Function to fetch mock Firebase Analytics data
-    const fetchAnalyticsData = () => {
-      // This is where you'd fetch data from BigQuery or another source
-      // For now, we're using mock data
-      const mockData = {
-        labels: ['Event 1', 'Event 2', 'Event 3'],
-        datasets: [
-          {
-            label: 'Event Count',
-            data: [25, 50, 75], // Replace with real data
-            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-            borderColor: 'rgba(153, 102, 255, 1)',
-            borderWidth: 1,
-          }
-        ],
-      };
-      setAnalyticsData(mockData);
-      setNewGraphData(mockData);
-    };
-
-    useEffect(() => {
-      fetchAnalyticsData();
-    }, []);
 
     useEffect(() => {
       setChartData({
@@ -208,12 +371,28 @@ function AdminScreen() {
               <Bar data={chartData} />
             </div>
             <div className="chart-container">
-              <h3>XXX Metrics</h3> {/* Label for the second graph */}
+              <h3>Item Add Metrics</h3> {/* Label for the second graph */}
               <Bar data={analyticsData} />
             </div>
             <div className="chart-container">
               <h3>A/B Testing Metrics</h3> {/* Label for the third graph */}
               <Bar data={newGraphData} />
+            </div>
+            <div className="chart-container">
+              <h3>Login Metrics</h3>
+              <Bar data={loginData} />
+            </div>
+            <div className="chart-container">
+              <h3>Item Delete Metrics</h3>
+              <Bar data={deleteData} />
+            </div>
+            <div className="chart-container">
+              <h3>Scanned Items Metrics</h3>
+              <Bar data={scannedData} />
+            </div>
+            <div className="chart-container">
+              <h3>Scanned Items Added Metrics</h3>
+              <Bar data={scannedItemAddData} />
             </div>
           </div>
         </div>
