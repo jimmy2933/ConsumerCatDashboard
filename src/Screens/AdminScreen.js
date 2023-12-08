@@ -291,19 +291,32 @@ function AdminScreen() {
         const querySnapshot = await getDocs(collection(db, "users"));
         setUserCount(querySnapshot.size);
       };
-
+  
       // Fetch Product Database Count
       const fetchProductCount = async () => {
         const querySnapshot = await getDocs(collection(db, "productDatabase"));
         setProductCount(querySnapshot.size);
       };
-
+  
       // Fetch Feedback Responses Count
       const fetchFeedbackCount = async () => {
-        const querySnapshot = await getDocs(collection(db, "feedbackResponses"));
-        setFeedbackCount(querySnapshot.size);
+        // const feedbackRef = collection(db, 'eventLogs', 'itemDelete', 'date');
+        const parentCollections = ['Inventory', 'Report', 'Scanner'];
+        let totalFeedbackCount = 0;
+      
+        for (const parentCollection of parentCollections) {
+          const feedbackRef = collection(db, 'userFeedback', parentCollection, 'feedback');
+          const feedbackSnap = await getDocs(feedbackRef);
+  
+          for (const feedbackDoc of feedbackSnap.docs) {
+            // Assuming each document in the 'Feedback' collection represents a single feedback item
+            totalFeedbackCount += 1; // Increment count for each feedback document
+          }
+        }
+  
+        setFeedbackCount(totalFeedbackCount); // Update the state with the total feedback count
       };
-
+  
       fetchUsersCount();
       fetchProductCount();
       fetchFeedbackCount();
